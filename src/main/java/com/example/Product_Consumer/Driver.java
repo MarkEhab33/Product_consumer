@@ -15,10 +15,96 @@ public class Driver {
 	private List<String> queuesIDs ;
 	private List<String> machinesIDs ;
 	private HashMap<String,List<String>> connectionMap=new HashMap<String,List<String>>();
-
+	private ArrayList <queue> AllQueues = new ArrayList <queue>();
+	private ArrayList <Machine> AllMachines = new ArrayList <Machine>();
 	
 	
-
+	public static void main(String[] args) throws InterruptedException {}
+	public void CreateQueues() {
+		for(int i=0;i<this.queuesIDs.size();i++) {
+			queue q = new queue();
+			q.setId(this.queuesIDs.get(i));
+			this.AllQueues.add(q);
+			System.out.println(q.getId());
+		}
+	}
+	
+	public void CreateMachines() {
+		for(int i=0;i<this.machinesIDs.size();i++) {
+			Machine m = new Machine();
+			m.setId(this.machinesIDs.get(i));
+			this.AllMachines.add(m);
+			System.out.println(m.getId());
+		}
+	}
+	
+	public void CreateProducts(int number) {
+		for(int i=0 ; i<number ;i++) {
+			Product p = new Product();
+			this.AllQueues.get(0).addToMyProducts(p);
+		}
+	}
+	
+	public void StartSimulation() {
+		for(int i=0;i<this.AllMachines.size();i++) {
+			this.AllMachines.get(i).launch();
+		}
+	}
+	
+	
+	public void Connections() {
+		String from,to="";
+		queue que = new queue();
+		Machine mach = new Machine();
+		
+		for(String k: this.connectionMap.keySet()) {
+			from=this.connectionMap.get(k).get(0);
+			to=this.connectionMap.get(k).get(1);
+			if(from.startsWith("Q")){
+				que = findThequeueByID(from);
+				mach = findTheMachineByID(to);
+				
+				que.addTotoMachine(mach);
+				mach.addToFromQueue(que);
+			}else {
+				mach = findTheMachineByID(from);
+				que = findThequeueByID(to);
+				
+				mach.setToQueue(que);
+				que.addToFromMachine(mach);
+			}
+		}
+			
+	}
+	
+	public queue findThequeueByID(String id) {
+		queue find = new queue() ;
+		for(int i=0 ; i<this.AllQueues.size();i++) {
+			if((AllQueues.get(i).getId()).equals(id)) {
+				find = AllQueues.get(i);
+			}
+		}
+		return find;
+		
+	}
+	
+	public Machine findTheMachineByID(String id) {
+		Machine find = new Machine();
+		for(int i=0 ; i<this.AllMachines.size();i++) {
+			if((AllMachines.get(i).getId()).equals(id)) {
+				find = AllMachines.get(i);
+			}
+		}
+		return find;
+		
+	}
+	
+	
+	
+	
+	
+		
+	
 	public List<String> getQueuesIDs() {
 		return queuesIDs;
 	}
@@ -41,45 +127,6 @@ public class Driver {
 
 	public void setConnectionMap(HashMap<String, List<String>> connectionMap) {
 		this.connectionMap = connectionMap;
-	}
-
-	public static void main(String[] args) throws InterruptedException {
-		// TODO Auto-generated method stub
-		/*
-		Machine m = new Machine ();
-		m.setId("Machine1");
-		
-		Machine n = new Machine();
-		n.setId("Machine2");
-		
-		Product p1 = new Product();
-		Product p2 = new Product();
-		Product p3 = new Product();
-		
-		queue Q1 = new queue();
-		Q1.setId("Queue1");
-		Q1.addToMyProducts(p1);
-		Q1.addToMyProducts(p2);
-		Q1.addToMyProducts(p3);
-		
-		queue Q2 = new queue();
-		Q2.setId("Queue2");
-		
-		queue Q3 = new queue();
-		Q3.setId("Queue3");
-	
-		Q1.addTotoMachine(m);
-		
-		m.addToFromQueue(Q1);
-		m.setToQueue(Q2);
-		
-		n.addToFromQueue(Q2);
-		n.setToQueue(Q3);
-		
-		n.launch();
-		m.launch();
-		*/
-		
 	}
 	
 	

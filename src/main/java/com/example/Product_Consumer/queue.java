@@ -12,7 +12,7 @@ public class queue implements Observer {
 	private Deque<Product> products;
 	private ArrayList<Machine> fromMachine;
 	private ArrayList<Machine> toMachine;
-
+	//private ArrayList<queue> AllQueues= new ArrayList<queue>();
 	
 	public queue() {
 	
@@ -20,22 +20,23 @@ public class queue implements Observer {
 		fromMachine=new ArrayList<Machine>();
 		toMachine=new ArrayList<Machine>();
 	}
+	
+	
 
 	public void addToMyProducts(Product p) {
-		System.out.println("Element will added to the products  of queue with id "+this.id+ p.getColour());
+		System.out.println("Element will added to the products  of queue with id "+this.id+" "+ p.getColour());
 		this.products.add(p);
-		System.out.println("My last product is :"+this.products.peekLast().getColour());
+	
 	}
 	
 	public void addTotoMachine(Machine m) {
-		System.out.println("the machine is added to TOMachine"+m.getId());
+		System.out.println("the machine is added to TOMachine "+m.getId()+"to the queue "+this.id);
 		this.toMachine.add(m);
-		
 	}
 	
 
 	public void addToFromMachine(Machine m) {
-		System.out.println("the machine is added to FromMachine"+m.getId());
+		System.out.println("the machine is added to FromMachine "+m.getId()+"to the queue "+this.id);
 		this.fromMachine.add(m);
 		
 	}

@@ -19,10 +19,11 @@ public class Machine implements Runnable,Subject {
 		Random r = new Random();
 		int ind =r.nextInt(times.length);
 		this.perioud= times[ind];
-		System.out.println(this.perioud);
 		this.avaliable = true;
 		this.fromQueue=new ArrayList<queue>();
 		this.toQueue = new queue();
+		
+		//System.out.println("A new Machine is created with id : "+this.id);
 		
 	}
 	
@@ -54,7 +55,7 @@ public class Machine implements Runnable,Subject {
 						System.out.println("Current Serve product is "+this.currentProduct.getColour()+" in machine "+this.id);
 						Thread.sleep(perioud);
 						this.toQueue.addToMyProducts(currentProduct);
-						System.out.println("After add item to toQueue the size becomes"+ this.toQueue.getProducts().size());
+						//System.out.println("After add item to toQueue the size becomes"+ this.toQueue.getProducts().size());
 					}
 				}
 			}
@@ -67,7 +68,7 @@ public class Machine implements Runnable,Subject {
 	}
 	
 	public void addToFromQueue(queue q) {
-		System.out.println("An queue added to FromQueue"+q.getId());
+		System.out.println("An queue added to FromQueue "+q.getId()+" to the machine "+ this.id);
 		this.fromQueue.add(q);
 	   
 	}
@@ -93,7 +94,7 @@ public class Machine implements Runnable,Subject {
 	}
 
 	public void setToQueue(queue toQueue) {
-		System.out.println("the toQueue for the machine of id "+this.id+" is queue with id"+toQueue.getId());
+		System.out.println("the toQueue for the machine of id "+this.id+" is queue with id "+toQueue.getId());
 		this.toQueue = toQueue;
 	}
 

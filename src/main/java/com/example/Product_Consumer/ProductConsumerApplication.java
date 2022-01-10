@@ -37,27 +37,24 @@ public class ProductConsumerApplication {
 	
 	public static void main(String[] args) {
 		SpringApplication.run(ProductConsumerApplication.class, args);
-		
 	}
 	
+	@PostMapping("/data")				// request for get the data 
+	public String getData(@RequestBody String data){
+		d.setQueuesIDs(p.GetList(data, "queues"));
+		d.setMachinesIDs(p.GetList(data, "machines"));
+		d.setConnectionMap(p.GetMap(data, "fromTo"));
+		d.CreateQueues();
+		d.CreateMachines();
+		d.Connections();
+		return "Done with connections";
+	}
 	
+	@PostMapping("/start")
+	public void startSimulation(@RequestBody String numberOfProducts){
+		int products = Integer.parseInt(numberOfProducts);
+		d.CreateProducts(products);
+		d.StartSimulation();
+	}
 	
-	
-	// request for get the data 
-			@PostMapping("/data")
-			public void getData(@RequestBody String data){
-				d.setQueuesIDs(p.GetList(data, "queues"));
-				d.setMachinesIDs(p.GetList(data, "machines"));
-				d.setConnectionMap(p.GetMap(data, "fromTo"));
-				
-				System.out.println(d.getQueuesIDs());
-				System.out.println(d.getMachinesIDs());
-				for(String k: d.getConnectionMap().keySet()) {
-					System.out.println("key : " + k);
-					System.out.println((d.getConnectionMap().get(k)).get(0));
-					System.out.println((d.getConnectionMap().get(k)).get(1));
-				}
-			
-			}
-
 }
