@@ -1,9 +1,51 @@
 package com.example.Product_Consumer;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class Driver {
+	
+	private List<String> queuesIDs ;
+	private List<String> machinesIDs ;
+	private HashMap<String,List<String>> connectionMap=new HashMap<String,List<String>>();
+
+	
+	
+
+	public List<String> getQueuesIDs() {
+		return queuesIDs;
+	}
+
+	public void setQueuesIDs(List<String> queuesIDs) {
+		this.queuesIDs = queuesIDs;
+	}
+
+	public List<String> getMachinesIDs() {
+		return machinesIDs;
+	}
+
+	public void setMachinesIDs(List<String> machinesIDs) {
+		this.machinesIDs = machinesIDs;
+	}
+
+	public HashMap<String, List<String>> getConnectionMap() {
+		return connectionMap;
+	}
+
+	public void setConnectionMap(HashMap<String, List<String>> connectionMap) {
+		this.connectionMap = connectionMap;
+	}
 
 	public static void main(String[] args) throws InterruptedException {
 		// TODO Auto-generated method stub
-		
+		/*
 		Machine m = new Machine ();
 		m.setId("Machine1");
 		
@@ -36,20 +78,10 @@ public class Driver {
 		
 		n.launch();
 		m.launch();
-			
-		
-		
-		
-			/*Thread t1 = new Thread(m);
-			Thread t2 = new Thread(n);
-			t1.start();
-			
-			t1.join();
-			t2.start();
-			t2.join();
-		
 		*/
 		
 	}
+	
+	
 
 }
