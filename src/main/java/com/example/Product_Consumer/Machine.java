@@ -7,7 +7,7 @@ import java.util.Random;
 
 public class Machine implements Runnable,Subject {
 	private int[] times= {1000,2000,3000,4000,5000,6000,7000,8000,9000};
-	private int perioud;
+	private int perioud ;
 	private String id;
 	private boolean avaliable;
 	private ArrayList<queue> fromQueue;
