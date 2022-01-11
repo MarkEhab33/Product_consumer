@@ -1,9 +1,10 @@
 package Observer;
 
 import com.example.Product_Consumer.Machine;
+import com.example.Product_Consumer.queue;
 
 public interface Observer {
-	public void update (Machine m);
+	public queue update (Machine m);
 
 
 

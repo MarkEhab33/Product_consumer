@@ -26,18 +26,18 @@ public class queue implements Observer {
 	
 
 	public void addToMyProducts(Product p) {
-		System.out.println("Element will added to the products  of queue with id "+this.id+" "+ p.getColour());
+		//System.out.println("Element will added to the products  of queue with id "+this.id+" "+ p.getColour());
 		this.products.push(p);;
 	}
 	
-	public void addTotoMachine(Machine m) {
-		System.out.println("the machine is added to TOMachine "+m.getId()+"to the queue "+this.id);
+	synchronized public void addTotoMachine(Machine m) {
+		//System.out.println("the machine is added to TOMachine "+m.getId()+"to the queue "+this.id);
 		this.toMachine.add(m);
 	}
 	
 
 	public void addToFromMachine(Machine m) {
-		System.out.println("the machine is added to FromMachine "+m.getId()+"to the queue "+this.id);
+		//System.out.println("the machine is added to FromMachine "+m.getId()+"to the queue "+this.id);
 		this.fromMachine.add(m);
 		
 	}
@@ -50,11 +50,11 @@ public class queue implements Observer {
 		this.id = id;
 	}
 	
-	public Deque<Product> getProducts() {
+	 public Deque<Product> getProducts() {
 		return products;
 	}
 
-	public void setProducts(Deque<Product> products) {
+	synchronized public void setProducts(Deque<Product> products) {
 		this.products = products;
 	}
 
@@ -76,19 +76,33 @@ public class queue implements Observer {
 
 
 
-	@Override
-	public void update(Machine m) {
-		// TODO Auto-generated method stub
-		boolean canServe=m.getAvaliability();
-		if((!this.products.isEmpty()) && canServe){
-			m.currentProduct=this.cloneProduct(this.products.pop());
-		}	
-	}
+//	@Override
+//	public queue update(Machine m) {
+//		// TODO Auto-generated method stub
+//		//boolean canServe=m.getAvaliability();
+//		if((!this.products.isEmpty())){
+//			//m.currentProduct=this.cloneProduct(this.products.pop());
+//			return this;
+//		}
+//		return null;	
+//	}
 
 	public Product cloneProduct(Product p) {
 		Product newProduct = new Product();
 		newProduct.setColour(p.getColour());
 		return newProduct;
 	}
+
+
+
+@Override
+public queue update(Machine m) {
+	// TODO Auto-generated method stub
+	if(!this.products.isEmpty()){
+//		//m.currentProduct=this.cloneProduct(this.products.pop());
+		return this;
+	}
+	return null;
+}
 
 }

@@ -105,13 +105,14 @@ public class Driver {
 			if(from.startsWith("Q")){
 				que = findThequeueByID(from);
 				mach = findTheMachineByID(to);
-				
+				System.out.println(from + " >>>> " + to);
 				que.addTotoMachine(mach);
 				mach.addToFromQueue(que);
 			}else {
+				System.out.println("from is " + from) ;
 				mach = findTheMachineByID(from);
 				que = findThequeueByID(to);
-				
+				System.out.println(from + " >>>> " + to);
 				mach.setToQueue(que);
 				que.addToFromMachine(mach);
 			}
