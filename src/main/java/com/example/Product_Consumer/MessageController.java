@@ -8,10 +8,10 @@ import org.springframework.web.util.HtmlUtils;
 
 @Controller
 public class MessageController {
-    @MessageMapping("/message")
-    @SendTo("/topic/messages")
+    @MessageMapping("/hello")
+    @SendTo("/topic/greetings")
     public ResponseMessage getMessage(final Message message) throws InterruptedException {
        Thread.sleep(1000);
-        return new ResponseMessage(HtmlUtils.htmlEscape(message.getMessageContent()));
+        return new ResponseMessage("Hello, "+HtmlUtils.htmlEscape(message.getMessageContent()));
     }
 }
