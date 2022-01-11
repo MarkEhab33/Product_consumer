@@ -5,6 +5,11 @@ import java.util.Deque;
 import java.util.Queue;
 import java.util.Random;
 
+import Observer.Subject;
+import SnapShot.Container;
+import SnapShot.State;
+import SnapShot.Update;
+
 public class Machine implements Runnable,Subject {
 	private int[] times= {1000,2000,3000,4000,5000,6000,7000,8000,9000};
 	private int perioud ;
@@ -12,22 +17,21 @@ public class Machine implements Runnable,Subject {
 	private boolean avaliable;
 	private ArrayList<queue> fromQueue;
 	private queue toQueue;
+	
 	public Product currentProduct;
 	
+	
 	public Machine() {
-		
 		Random r = new Random();
 		int ind =r.nextInt(times.length);
 		this.perioud= times[ind];
 		this.avaliable = true;
 		this.fromQueue=new ArrayList<queue>();
 		this.toQueue = new queue();
-		
-		//System.out.println("A new Machine is created with id : "+this.id);
-		
 	}
 	
 	public void launch() {
+	
 		Thread t = new Thread(this);
 		t.start();
 	}
@@ -42,25 +46,39 @@ public class Machine implements Runnable,Subject {
 
 	@Override
 	public void run() {
-		//Object o = new Object();
-		
+		Update update = new Update();
+		State state = new State();
 			try {
 				this.fromQueue=this.getFromQueue();
 				System.out.println("Enter the Run by machine "+this.id + " with time sleep "+ this.perioud);
 				while(true) {
 				for(int i=0 ; i<this.fromQueue.size();i++) {
-//					System.out.println(fromQueue.size());
 					while(!this.fromQueue.get(i).getProducts().isEmpty()) {
 						this.currentProduct= this.fromQueue.get(i).getProducts().poll();
 						System.out.println("Current Serve product is "+this.currentProduct.getColour()+" in machine "+this.id);
+						update.setMachineColour(this.currentProduct.getColour());
+						update.setMachineID(this.getId());
+						update.setQueueID(this.fromQueue.get(i).getId());
+						update.setQueueNum(Integer.toString(this.fromQueue.get(i).getProducts().size()));
+		
+						state=new State(update,Driver.startTime);
+						
+						Driver.c.AddToMySteps(state);
+				
 						Thread.sleep(perioud);
 						this.toQueue.addToMyProducts(currentProduct);
-						//System.out.println("After add item to toQueue the size becomes"+ this.toQueue.getProducts().size());
+						update.setMachineColour("white");
+						update.setMachineID(this.getId());
+						update.setQueueID(this.toQueue.getId());
+						update.setQueueNum(Integer.toString(this.toQueue.getProducts().size()));
+					
+						state=new State(update,Driver.startTime);
+						
+						Driver.c.AddToMySteps(state);
+						
+						}
 					}
 				}
-			}
-				
-				
 			} catch (Exception e) {
 				
 				e.printStackTrace();

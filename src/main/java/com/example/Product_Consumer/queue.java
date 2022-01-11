@@ -7,6 +7,8 @@ import java.util.LinkedList;
 
 import java.util.Queue;
 
+import Observer.Observer;
+
 public class queue implements Observer {
 	private String id;
 	private Deque<Product> products;
@@ -25,7 +27,7 @@ public class queue implements Observer {
 
 	public void addToMyProducts(Product p) {
 		System.out.println("Element will added to the products  of queue with id "+this.id+" "+ p.getColour());
-		this.products.add(p);
+		this.products.push(p);;
 	
 	}
 	

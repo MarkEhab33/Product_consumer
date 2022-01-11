@@ -26,6 +26,8 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import Converter.ParseData;
+import SnapShot.Container;
+import SnapShot.State;
 
 @SpringBootApplication
 @RestController
@@ -57,4 +59,11 @@ public class ProductConsumerApplication {
 		d.StartSimulation();
 	}
 	
+	@PostMapping("/replay")
+	public String Replay() {
+		System.out.println(".... REPLAY");
+		d.replay();
+		return "Done with replay";
+	}
+		
 }
