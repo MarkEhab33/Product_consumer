@@ -9,6 +9,11 @@ import Observer.Observable;
 import SnapShot.Container;
 import SnapShot.State;
 import SnapShot.Update;
+import com.example.Product_Consumer.dto.WSService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.stereotype.Component;
 
 public class Machine implements Runnable,Observable {
 	private int[] times= {1000,2000,3000,4000,5000,6000,7000,8000,9000};
@@ -18,15 +23,18 @@ public class Machine implements Runnable,Observable {
 	private ArrayList<queue> fromQueue;
 	private queue toQueue;
 	public Product currentProduct;
-	
-	
-	public Machine() {
+	SimpMessagingTemplate simpMessagingTemplate;
+	FrontService frontService;
+
+	@Autowired
+	public Machine(FrontService service) {
 		Random r = new Random();
 		int ind =r.nextInt(times.length);
 		this.perioud= times[ind];
 		this.avaliable = true;
 		this.fromQueue=new ArrayList<queue>();
 		this.toQueue = new queue();
+		this.frontService=service;
 	}
 	
 	public void launch() {
@@ -56,9 +64,11 @@ public class Machine implements Runnable,Observable {
 						update.setMachineID(this.getId());
 						update.setQueueID(this.fromQueue.get(i).getId());
 						update.setQueueNum(Integer.toString(this.fromQueue.get(i).getProducts().size()));
-		
+						ObjectMapper mapper = new ObjectMapper();
 						state=new State(update,Driver.startTime);
-						
+						String jsonString = mapper.writeValueAsString(update);
+						this.frontService.sendToFront(jsonString);
+						System.out.println("eh el 7alawa di "+jsonString);
 						Driver.c.AddToMySteps(state);
 				
 						Thread.sleep(perioud);
@@ -68,11 +78,14 @@ public class Machine implements Runnable,Observable {
 						update.setMachineID(this.getId());
 						update.setQueueID(this.toQueue.getId());
 						update.setQueueNum(Integer.toString(this.toQueue.getProducts().size()));
-					
+
+						jsonString = mapper.writeValueAsString(update);
+						this.frontService.sendToFront(jsonString);
+						System.out.println("eh el 7alawa di "+jsonString);
 						state=new State(update,Driver.startTime);
 						
 						Driver.c.AddToMySteps(state);
-						
+
 						}
 					}
 				}

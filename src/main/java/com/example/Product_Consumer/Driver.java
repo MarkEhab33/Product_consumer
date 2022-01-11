@@ -11,6 +11,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import SnapShot.Container;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class Driver {
 	
@@ -23,6 +24,13 @@ public class Driver {
 	public static Container c = new Container();
 	public static int NumberOfProducts=0;
 	public static queue EndQueue;
+	private FrontService frontService;
+
+	@Autowired
+	public Driver(FrontService service){
+		this.frontService=service;
+	}
+	
 	public long getStartTime() {
 		return startTime;
 	}
@@ -62,7 +70,7 @@ public class Driver {
 	
 	public void CreateMachines() {
 		for(int i=0;i<this.machinesIDs.size();i++) {
-			Machine m = new Machine();
+			Machine m = new Machine(this.frontService);
 			m.setId(this.machinesIDs.get(i));
 			this.AllMachines.add(m);
 			System.out.println(m.getId());
@@ -89,7 +97,7 @@ public class Driver {
 	public void Connections() {
 		String from,to="";
 		queue que = new queue();
-		Machine mach = new Machine();
+		Machine mach = new Machine(this.frontService);
 		
 		for(String k: this.connectionMap.keySet()) {
 			from=this.connectionMap.get(k).get(0);
@@ -123,7 +131,7 @@ public class Driver {
 	}
 	
 	public Machine findTheMachineByID(String id) {
-		Machine find = new Machine();
+		Machine find = new Machine(frontService);
 		for(int i=0 ; i<this.AllMachines.size();i++) {
 			if((AllMachines.get(i).getId()).equals(id)) {
 				find = AllMachines.get(i);
