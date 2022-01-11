@@ -72,7 +72,7 @@ public class Machine implements Runnable,Observable {
 							state=new State(update,Driver.startTime);
 							String jsonString = mapper.writeValueAsString(update);
 							this.frontService.sendToFront(jsonString);
-							System.out.println("eh el 7alawa di "+jsonString);
+							System.out.println(jsonString);
 							Driver.c.AddToMySteps(state);
 					
 							Thread.sleep(perioud);
@@ -85,7 +85,7 @@ public class Machine implements Runnable,Observable {
 
 							jsonString = mapper.writeValueAsString(update);
 							this.frontService.sendToFront(jsonString);
-							System.out.println("eh el 7alawa di "+jsonString);
+							System.out.println(jsonString);
 							state=new State(update,Driver.startTime);
 							Thread.sleep(500);
 							
