@@ -58,38 +58,48 @@ public class Machine implements Runnable,Observable {
 
 					while(!this.fromQueue.get(i).getProducts().isEmpty()) {
 						
-						this.currentProduct= this.fromQueue.get(i).getProducts().poll();
-						System.out.println("Current Serve product is "+this.currentProduct.getColour()+" in machine "+this.id);
-						update.setMachineColour(this.currentProduct.getColour());
-						update.setMachineID(this.getId());
-						update.setQueueID(this.fromQueue.get(i).getId());
-						update.setQueueNum(Integer.toString(this.fromQueue.get(i).getProducts().size()));
-						ObjectMapper mapper = new ObjectMapper();
-						state=new State(update,Driver.startTime);
-						String jsonString = mapper.writeValueAsString(update);
-						this.frontService.sendToFront(jsonString);
-						System.out.println("eh el 7alawa di "+jsonString);
-						Driver.c.AddToMySteps(state);
-				
-						Thread.sleep(perioud);
-						this.toQueue.addToMyProducts(currentProduct);
-						//System.out.println("After add item to toQueue the size becomes"+ this.toQueue.getProducts().size());
-						update.setMachineColour("white");
-						update.setMachineID(this.getId());
-						update.setQueueID(this.toQueue.getId());
-						update.setQueueNum(Integer.toString(this.toQueue.getProducts().size()));
-
-						jsonString = mapper.writeValueAsString(update);
-						this.frontService.sendToFront(jsonString);
-						System.out.println("eh el 7alawa di "+jsonString);
-						state=new State(update,Driver.startTime);
+						this.currentProduct= this.fromQueue.get(i).getProducts().pop();
 						
-						Driver.c.AddToMySteps(state);
+						if(this.currentProduct!=null) {
+							
 
+							System.out.println("Current Serve product is "+this.currentProduct.getColour()+" in machine "+this.id);
+							update.setMachineColour(this.currentProduct.getColour());
+							update.setMachineID(this.getId());
+							update.setQueueID(this.fromQueue.get(i).getId());
+							update.setQueueNum(Integer.toString(this.fromQueue.get(i).getProducts().size()));
+							ObjectMapper mapper = new ObjectMapper();
+							state=new State(update,Driver.startTime);
+							String jsonString = mapper.writeValueAsString(update);
+							this.frontService.sendToFront(jsonString);
+							System.out.println("eh el 7alawa di "+jsonString);
+							Driver.c.AddToMySteps(state);
+					
+							Thread.sleep(perioud);
+							this.toQueue.addToMyProducts(currentProduct);
+							//System.out.println("After add item to toQueue the size becomes"+ this.toQueue.getProducts().size());
+							update.setMachineColour("white");
+							update.setMachineID(this.getId());
+							update.setQueueID(this.toQueue.getId());
+							update.setQueueNum(Integer.toString(this.toQueue.getProducts().size()));
+
+							jsonString = mapper.writeValueAsString(update);
+							this.frontService.sendToFront(jsonString);
+							System.out.println("eh el 7alawa di "+jsonString);
+							state=new State(update,Driver.startTime);
+							Thread.sleep(500);
+							
+							Driver.c.AddToMySteps(state);
+							
+							}
 						}
+					
 					}
 				}
 			
+				if(Driver.EndQueue.getProducts().size()==Driver.NumberOfProducts){
+                    this.frontService.sendToFront("disconnect");
+                }
 				
 				
 			} catch (Exception e) {

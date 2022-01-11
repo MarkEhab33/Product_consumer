@@ -50,7 +50,7 @@ public class queue implements Observer {
 		this.id = id;
 	}
 	
-	public Deque<Product> getProducts() {
+	synchronized public Deque<Product> getProducts() {
 		return products;
 	}
 
