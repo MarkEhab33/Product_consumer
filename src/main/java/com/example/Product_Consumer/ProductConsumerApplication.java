@@ -65,9 +65,10 @@ public class ProductConsumerApplication {
 	}
 	
 	@PostMapping("/start")
-	public void startSimulation(@RequestBody String numberOfProducts){
+	public void startSimulation(@RequestBody String numberOfProducts) throws InterruptedException{
 		int products = Integer.parseInt(numberOfProducts);
 		d.CreateProducts(products);
+		Thread.sleep(3000);
 		d.StartSimulation();
 	}
 	

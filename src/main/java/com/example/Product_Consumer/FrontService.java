@@ -15,8 +15,6 @@ public class FrontService {
 
 
     public void sendToFront(String json) throws InterruptedException {
-        this.service.notifyFrontend("MARK ");
-        Thread.sleep(5000);
         this.service.notifyFrontend(json);
     }
 }

@@ -13,7 +13,7 @@ public class WSService {
         this.messagingTemplate = messagingTemplate;
     }
     public void notifyFrontend(final String message){
-        String response="hiiii " + message;
+        String response=message;
         messagingTemplate.convertAndSend("/topic/greetings",response);
     }
 }
