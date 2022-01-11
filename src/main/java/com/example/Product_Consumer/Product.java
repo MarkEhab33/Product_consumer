@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class Product {
 	
-	private String [] colors = {"black","green","red","blue","yellow","pirple","brown"};
+	private String [] colors = {"green","red","blue","yellow","purple","brown","cyan"};
 	private String colour;
 	
 	public Product() {

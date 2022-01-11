@@ -10,6 +10,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import SnapShot.Container;
+
 public class Driver {
 	
 	private List<String> queuesIDs ;
@@ -17,8 +19,14 @@ public class Driver {
 	private HashMap<String,List<String>> connectionMap=new HashMap<String,List<String>>();
 	private ArrayList <queue> AllQueues = new ArrayList <queue>();
 	private ArrayList <Machine> AllMachines = new ArrayList <Machine>();
-	
-	
+	public static long startTime;
+	public static Container c = new Container();
+	public long getStartTime() {
+		return startTime;
+	}
+	public void setStartTime(long startTime) {
+		this.startTime = startTime;
+	}
 	public static void main(String[] args) throws InterruptedException {}
 	public void CreateQueues() {
 		for(int i=0;i<this.queuesIDs.size();i++) {
@@ -46,6 +54,7 @@ public class Driver {
 	}
 	
 	public void StartSimulation() {
+		this.setStartTime(System.currentTimeMillis());
 		for(int i=0;i<this.AllMachines.size();i++) {
 			this.AllMachines.get(i).launch();
 		}
@@ -98,12 +107,6 @@ public class Driver {
 		return find;
 		
 	}
-	
-	
-	
-	
-	
-		
 	
 	public List<String> getQueuesIDs() {
 		return queuesIDs;

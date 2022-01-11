@@ -26,6 +26,8 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import Converter.ParseData;
+import SnapShot.Container;
+import SnapShot.State;
 
 @SpringBootApplication
 @RestController
@@ -34,6 +36,7 @@ import Converter.ParseData;
 public class ProductConsumerApplication {
 	Driver d = new Driver ();
 	ParseData p = new ParseData();
+	
 	
 	public static void main(String[] args) {
 		SpringApplication.run(ProductConsumerApplication.class, args);
@@ -57,4 +60,27 @@ public class ProductConsumerApplication {
 		d.StartSimulation();
 	}
 	
+	@PostMapping("/replay")
+	public void Replay() {
+		System.out.println(".... REPLAY");
+		long startTimeOfReplay = System.currentTimeMillis();
+		long atTime;
+		long go;
+		boolean x = true;
+		
+		while(x) {	
+			if(!d.c.getSteps().isEmpty()) {
+//				System.out.println(d.c.getSteps().pop().toString());
+				atTime = (System.currentTimeMillis())-startTimeOfReplay;
+				go = d.c.getSteps().peek().getTime();
+				if(atTime>go) {
+					atTime=0;
+					System.out.println(d.c.getSteps().pop().toString());
+				}
+			}else {
+				x=false;
+				System.out.println("Finish replay");
+			}
+		}
+	}
 }

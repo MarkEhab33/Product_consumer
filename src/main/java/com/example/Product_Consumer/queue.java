@@ -25,7 +25,7 @@ public class queue implements Observer {
 
 	public void addToMyProducts(Product p) {
 		System.out.println("Element will added to the products  of queue with id "+this.id+" "+ p.getColour());
-		this.products.add(p);
+		this.products.push(p);;
 	
 	}
 	
