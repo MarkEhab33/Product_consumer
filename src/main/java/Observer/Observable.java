@@ -1,5 +1,5 @@
 package Observer;
 
-public interface Subject {
+public interface Observable {
 	public void notifyAllSubscribers();
 }

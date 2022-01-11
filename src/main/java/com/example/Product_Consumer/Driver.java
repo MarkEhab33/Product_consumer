@@ -21,8 +21,8 @@ public class Driver {
 	private ArrayList <Machine> AllMachines = new ArrayList <Machine>();
 	public static long startTime;
 	public static Container c = new Container();
-	
-	
+	public static int NumberOfProducts=0;
+	public static queue EndQueue;
 	public long getStartTime() {
 		return startTime;
 	}
@@ -70,6 +70,8 @@ public class Driver {
 	}
 	
 	public void CreateProducts(int number) {
+		this.NumberOfProducts=number;
+		this.EndQueue=this.findThequeueByID("Qx");
 		for(int i=0 ; i<number ;i++) {
 			Product p = new Product();
 			this.AllQueues.get(0).addToMyProducts(p);

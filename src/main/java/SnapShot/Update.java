@@ -2,10 +2,12 @@ package SnapShot;
 
 public class Update {
 	private String queueID;
-	private String MachineID;
+	private String machineID;
 	private String queueNum;
-	private String MachineColour;
+	private String machineColour;
 	
+	
+
 
 	public String getQueueID() {
 		return queueID;
@@ -16,11 +18,11 @@ public class Update {
 	}
 
 	public String getMachineID() {
-		return MachineID;
+		return machineID;
 	}
 
 	public void setMachineID(String machineID) {
-		MachineID = machineID;
+		this.machineID = machineID;
 	}
 
 	public String getQueueNum() {
@@ -32,23 +34,23 @@ public class Update {
 	}
 
 	public String getMachineColour() {
-		return MachineColour;
+		return machineColour;
 	}
 
 	public void setMachineColour(String machineColour) {
-		MachineColour = machineColour;
+		this.machineColour = machineColour;
 	}
 
 	@Override
 	public String toString() {
-		return "Update [queueID=" + queueID + ", MachineID=" + MachineID + ", queueNum=" + queueNum + ", MachineColour="
-				+ MachineColour + "]";
+		return "Update [queueID=" + queueID + ", MachineID=" + machineID + ", queueNum=" + queueNum + ", MachineColour="
+				+ machineColour + "]";
 	}
 	
 	public Object clone() {
 		Update update = new Update();
-		update.setMachineColour(this.MachineColour);
-		update.setMachineID(MachineID);
+		update.setMachineColour(this.machineColour);
+		update.setMachineID(machineID);
 		update.setQueueID(this.queueID);
 		update.setQueueNum(queueNum);
 		return update;

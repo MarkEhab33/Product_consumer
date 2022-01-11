@@ -14,7 +14,7 @@ public class queue implements Observer {
 	private Deque<Product> products;
 	private ArrayList<Machine> fromMachine;
 	private ArrayList<Machine> toMachine;
-	//private ArrayList<queue> AllQueues= new ArrayList<queue>();
+	private Machine machine;
 	
 	public queue() {
 	
@@ -28,7 +28,6 @@ public class queue implements Observer {
 	public void addToMyProducts(Product p) {
 		System.out.println("Element will added to the products  of queue with id "+this.id+" "+ p.getColour());
 		this.products.push(p);;
-	
 	}
 	
 	public void addTotoMachine(Machine m) {
@@ -75,25 +74,21 @@ public class queue implements Observer {
 		this.toMachine = toMachine;
 	}
 
+
+
 	@Override
-	public void update(boolean avaliable, String id) {
+	public void update(Machine m) {
 		// TODO Auto-generated method stub
-		System.out.println("Update function ");
-		System.out.println("Search for id " + id);
-			for(int i=0 ; i<this.toMachine.size();i++) {
-				Machine m = this.toMachine.get(i);
-				String ID = m.getId();
-				System.out.println("id founded "+ID);
-				if(ID.equals(id)) {
-					System.out.println(m.getId());
-					System.out.println("Will serve now :"+this.products.poll().getColour());
-					m.currentProduct=this.products.poll();
-					System.out.println("My products now"+this.products);
-					m.run();
-					break;
-				
-			}
-		}
-		
+		boolean canServe=m.getAvaliability();
+		if((!this.products.isEmpty()) && canServe){
+			m.currentProduct=this.cloneProduct(this.products.pop());
+		}	
 	}
+
+	public Product cloneProduct(Product p) {
+		Product newProduct = new Product();
+		newProduct.setColour(p.getColour());
+		return newProduct;
+	}
+
 }
