@@ -7,6 +7,8 @@ import java.util.LinkedList;
 
 import java.util.Queue;
 
+import Observer.Observer;
+
 public class queue implements Observer {
 	private String id;
 	private Deque<Product> products;

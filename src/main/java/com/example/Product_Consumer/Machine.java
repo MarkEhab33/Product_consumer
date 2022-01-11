@@ -5,6 +5,7 @@ import java.util.Deque;
 import java.util.Queue;
 import java.util.Random;
 
+import Observer.Subject;
 import SnapShot.Container;
 import SnapShot.State;
 import SnapShot.Update;

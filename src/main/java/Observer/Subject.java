@@ -1,6 +1,5 @@
-package com.example.Product_Consumer;
+package Observer;
 
 public interface Subject {
-
 	public void notifyAllSubscribers();
 }

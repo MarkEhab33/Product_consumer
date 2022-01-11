@@ -21,13 +21,36 @@ public class Driver {
 	private ArrayList <Machine> AllMachines = new ArrayList <Machine>();
 	public static long startTime;
 	public static Container c = new Container();
+	
+	
 	public long getStartTime() {
 		return startTime;
 	}
 	public void setStartTime(long startTime) {
 		this.startTime = startTime;
 	}
-	public static void main(String[] args) throws InterruptedException {}
+	
+	public void replay() {
+		long startTimeOfReplay = System.currentTimeMillis();
+		long atTime;
+		long go;
+		boolean end = true;
+		
+		while(end) {	
+			if(!c.getSteps().isEmpty()) {			
+				atTime = (System.currentTimeMillis())-startTimeOfReplay;
+				go = c.getSteps().peek().getTime();
+				
+				if(atTime>go) {
+					atTime=0;
+					System.out.println(c.getSteps().pop().toString());
+				}
+			}else {
+				end=false;
+				System.out.println("Finish replay");
+			}
+		}
+	}
 	public void CreateQueues() {
 		for(int i=0;i<this.queuesIDs.size();i++) {
 			queue q = new queue();
