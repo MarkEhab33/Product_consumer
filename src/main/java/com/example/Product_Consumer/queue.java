@@ -25,7 +25,7 @@ public class queue implements Observer {
 	
 	
 
-	public void addToMyProducts(Product p) {
+	synchronized public void addToMyProducts(Product p) {
 		//System.out.println("Element will added to the products  of queue with id "+this.id+" "+ p.getColour());
 		this.products.push(p);;
 	}
@@ -36,7 +36,7 @@ public class queue implements Observer {
 	}
 	
 
-	public void addToFromMachine(Machine m) {
+	synchronized public void addToFromMachine(Machine m) {
 		//System.out.println("the machine is added to FromMachine "+m.getId()+"to the queue "+this.id);
 		this.fromMachine.add(m);
 		
@@ -96,13 +96,17 @@ public class queue implements Observer {
 
 
 @Override
-public queue update(Machine m) {
-	// TODO Auto-generated method stub
+ synchronized public queue update(Machine m) {
 	if(!this.products.isEmpty()){
-//		//m.currentProduct=this.cloneProduct(this.products.pop());
 		return this;
 	}
 	return null;
 }
 
+	synchronized public Product getOneProduct() {
+		if(!this.getProducts().isEmpty()) {
+			return this.getProducts().pop();
+		}
+		return null;
+	}
 }
