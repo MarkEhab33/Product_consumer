@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class WSService {
+
     private SimpMessagingTemplate messagingTemplate;
     @Autowired
     public WSService(SimpMessagingTemplate messagingTemplate){
