@@ -52,44 +52,62 @@ public class Machine implements Runnable,Observable {
 		
 		Update update = new Update();
 		State state = new State();
-		
-		try {
-			while(Driver.EndQueue.getProducts().size()<Driver.NumberOfProducts) {
-				this.notifyAllSubscribers();
-				this.currentProduct=this.serve.getProducts().pop();
-				if(this.currentProduct!=null) {
-					System.out.println("Current Serve product is "+this.currentProduct.getColour()+" in machine "+this.id);
-					update.setMachineColour(this.currentProduct.getColour());
-					update.setMachineID(this.getId());
-					update.setQueueID(this.serve.getId());
-					update.setQueueNum(Integer.toString(this.serve.getProducts().size()));
-					ObjectMapper mapper = new ObjectMapper();
-					state=new State(update,Driver.startTime);
-					String jsonString = mapper.writeValueAsString(update);
-					this.frontService.sendToFront(jsonString);
-					System.out.println(jsonString);
-					Driver.c.AddToMySteps(state);
-			
-					Thread.sleep(perioud);
-					this.toQueue.addToMyProducts(currentProduct);
-					//System.out.println("After add item to toQueue the size becomes"+ this.toQueue.getProducts().size());
-					update.setMachineColour("white");
-					update.setMachineID(this.getId());
-					update.setQueueID(this.toQueue.getId());
-					update.setQueueNum(Integer.toString(this.toQueue.getProducts().size()));
+			try {
+				this.fromQueue=this.getFromQueue();
+				System.out.println("Enter the Run by machine "+this.id + " with time sleep "+ this.perioud);
+				while(Driver.EndQueue.getProducts().size()<Driver.NumberOfProducts) {
+				for(int i=0 ; i<this.fromQueue.size();i++) {
 
-					jsonString = mapper.writeValueAsString(update);
-					this.frontService.sendToFront(jsonString);
-					System.out.println(jsonString);
-					state=new State(update,Driver.startTime);
+					while(!this.fromQueue.get(i).getProducts().isEmpty()) {
+						
+						this.currentProduct= this.fromQueue.get(i).getProducts().pop();
+						
+						if(this.currentProduct!=null) {
+							
+
+							System.out.println("Current Serve product is "+this.currentProduct.getColour()+" in machine "+this.id);
+							update.setMachineColour(this.currentProduct.getColour());
+							update.setMachineID(this.getId());
+							update.setQueueID(this.fromQueue.get(i).getId());
+							update.setQueueNum(Integer.toString(this.fromQueue.get(i).getProducts().size()));
+							ObjectMapper mapper = new ObjectMapper();
+							state=new State(update,Driver.startTime);
+							String jsonString = mapper.writeValueAsString(update);
+							this.frontService.sendToFront(jsonString);
+							System.out.println(jsonString);
+							Driver.c.AddToMySteps(state);
 					
-					Driver.c.AddToMySteps(state);
+							Thread.sleep(perioud);
+							this.toQueue.addToMyProducts(currentProduct);
+							//System.out.println("After add item to toQueue the size becomes"+ this.toQueue.getProducts().size());
+							update.setMachineColour("white");
+							update.setMachineID(this.getId());
+							update.setQueueID(this.toQueue.getId());
+							update.setQueueNum(Integer.toString(this.toQueue.getProducts().size()));
+
+							jsonString = mapper.writeValueAsString(update);
+							this.frontService.sendToFront(jsonString);
+							System.out.println(jsonString);
+							state=new State(update,Driver.startTime);
+							Thread.sleep(500);
+							
+							Driver.c.AddToMySteps(state);
+							
+							}
+						}
+					
+					}
 				}
-			}
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
+			
+				if(Driver.EndQueue.getProducts().size()==Driver.NumberOfProducts){
+                    this.frontService.sendToFront("disconnect");
+                }
+				
+				
+			} catch (Exception e) {
+				
+				e.printStackTrace();
+			}}
 		
 //			try {
 //				this.fromQueue=this.getFromQueue();
