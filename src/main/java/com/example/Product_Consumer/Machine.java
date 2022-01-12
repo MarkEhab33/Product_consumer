@@ -50,30 +50,22 @@ public class Machine implements Runnable,Observable {
 			State state = new State();
 
 			try {
-				while (Driver.EndQueue.getProducts().size() != Driver.NumberOfProducts) {
+				while (Driver.EndQueue.getProducts().size() <= Driver.NumberOfProducts) {
 					this.notifyAllSubscribers();
-
 					if (this.serve != null) {
-
 						this.currentProduct = this.serve.getOneProduct();
-
 						if (this.currentProduct != null) {
-
 							update.setMachineColour(this.currentProduct.getColour());
 							update.setMachineID(this.getId());
 							update.setQueueID(this.serve.getId());
 							update.setQueueNum(Integer.toString(this.serve.getProducts().size()));
 							ObjectMapper mapper = new ObjectMapper();
-
 							String jsonString = mapper.writeValueAsString(update);
 							this.frontService.sendToFront(jsonString);
 							System.out.println(jsonString);
-
 							state = new State(update, Driver.startTime);
 							Driver.c.AddToMySteps(state);
-
 							Thread.sleep(perioud);
-
 							this.toQueue.addToMyProducts(currentProduct);
 							System.out.println(this.toQueue.getProducts().size());
 							update.setMachineColour("white");

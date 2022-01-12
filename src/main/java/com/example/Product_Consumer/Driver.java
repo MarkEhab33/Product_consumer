@@ -28,12 +28,16 @@ public class Driver {
 	public static queue EndQueue;
 	private FrontService frontService;
 	public static int colorIndex=0;
+	static boolean endAll=false;
+	static int machinesNum=0;
+	
 	
 	@Autowired
 	public Driver(FrontService service){
 		this.frontService=service;
 	}
 
+	
 	public void replay() {
 
 		long startTimeOfReplay = System.currentTimeMillis();
@@ -90,6 +94,7 @@ public class Driver {
 			this.AllMachines.add(m);
 			System.out.println(m.getId());
 		}
+		Driver.machinesNum=this.AllMachines.size();
 	}
 	
 	public void CreateProducts(int number) {
@@ -108,6 +113,8 @@ public class Driver {
 		for(int i=0;i<this.AllMachines.size();i++) {
 			this.AllMachines.get(i).launch();
 		}
+		
+		
 	}
 	
 	
