@@ -69,6 +69,11 @@ public class Driver {
 				System.out.println("Finish replay");
 			}
 		}
+		try {
+			this.frontService.sendToFront("disconnect");
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void CreateQueues() {
