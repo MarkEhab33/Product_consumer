@@ -50,7 +50,7 @@ public class Machine implements Runnable,Observable {
 			State state = new State();
 
 			try {
-				while (Driver.EndQueue.getProducts().size() < Driver.NumberOfProducts) {
+				while ((Driver.EndQueue.getProducts().size() < Driver.NumberOfProducts)) {
 					this.notifyAllSubscribers();
 					if (this.serve != null) {
 						this.currentProduct = this.serve.getOneProduct();
