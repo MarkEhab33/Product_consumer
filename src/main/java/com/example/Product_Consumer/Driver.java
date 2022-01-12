@@ -30,13 +30,33 @@ public class Driver {
 	public static int colorIndex=0;
 	static boolean endAll=false;
 	static int machinesNum=0;
-	
+	static int endedMachines=0;
+	static FrontService sfrontservice;
 	
 	@Autowired
 	public Driver(FrontService service){
 		this.frontService=service;
+		sfrontservice=service;
 	}
 
+	
+	
+	synchronized public static void endMachineCount() {
+		endedMachines++;
+		System.out.println(endedMachines + " == ? " + machinesNum);
+		if(endedMachines==machinesNum) {
+			try {
+				sfrontservice.sendToFront("disconnect");
+				System.out.println("disc ALLLL ");
+
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+	}
+	
 	
 	public void replay() {
 

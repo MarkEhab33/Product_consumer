@@ -50,7 +50,7 @@ public class Machine implements Runnable,Observable {
 			State state = new State();
 
 			try {
-				while (Driver.EndQueue.getProducts().size() <= Driver.NumberOfProducts) {
+				while (Driver.EndQueue.getProducts().size() < Driver.NumberOfProducts) {
 					this.notifyAllSubscribers();
 					if (this.serve != null) {
 						this.currentProduct = this.serve.getOneProduct();
@@ -85,6 +85,7 @@ public class Machine implements Runnable,Observable {
 
 
 				System.out.println("Machine " + this.getId() + " end ");
+				Driver.endMachineCount();
 
 			} catch (Exception e) {
 				System.out.println("From catch failed in machine >>>>> " + this.getId());
@@ -93,15 +94,16 @@ public class Machine implements Runnable,Observable {
 			if (Driver.EndQueue.getProducts().size() == Driver.NumberOfProducts){
 				exit = true;
 			}
-		}
-			if (Driver.EndQueue.getProducts().size() >= Driver.NumberOfProducts) {
-				try {
-					this.frontService.sendToFront("disconnect");
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-				System.out.println("disc");
 			}
+//		}
+//			if (Driver.EndQueue.getProducts().size() >= Driver.NumberOfProducts) {
+//				try {
+//					this.frontService.sendToFront("disconnect");
+//				} catch (InterruptedException e) {
+//					e.printStackTrace();
+//				}
+//				System.out.println("disc");
+//			}
 
 			System.out.println("Thread of Machine " + this.getId() + " ENDED");
 
