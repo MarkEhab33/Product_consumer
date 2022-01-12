@@ -52,6 +52,8 @@ public class Driver {
 						ObjectMapper mapper = new ObjectMapper();
 
 						String jsonString = mapper.writeValueAsString(c.getSteps().pop().getUpdate());
+						System.out.println(c.getSteps().size()+" updates left to be sent ");
+						System.out.println(jsonString);
 						this.frontService.sendToFront(jsonString);
 
 					} catch (InterruptedException e) {
@@ -59,7 +61,7 @@ public class Driver {
 					} catch (JsonProcessingException e) {
 						e.printStackTrace();
 					}
-					System.out.println(c.getSteps().pop().toString());
+//					System.out.println(c.getSteps().pop().toString());
 				}
 			}else {
 				end=false;
