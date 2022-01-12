@@ -101,6 +101,9 @@ public class Machine implements Runnable,Observable {
 			System.out.println("From catch failed in machine >>>>> "+this.getId());
 			e.printStackTrace();
 		}
+		
+		
+		System.out.println("Thread of Machine "+ this.getId() + " ENDED");
 	}
 		
 
@@ -150,8 +153,10 @@ public class Machine implements Runnable,Observable {
 
 	@Override
 	public void notifyAllSubscribers() {
-		for(int i=0 ;(i<this.fromQueue.size() && this.serve==null);i++){
+		for(int i=0 ;(i<this.fromQueue.size());i++){
+			if(this.serve==null || this.serve.isEmpty()) {
 				this.serve =  (this.fromQueue).get(i).update(this);
+			}
 		}
 	}
 	

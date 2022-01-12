@@ -103,6 +103,10 @@ public class queue implements Observer {
 	return null;
 }
 
+
+	public boolean isEmpty() {
+		return this.products.isEmpty();
+	}
 	synchronized public Product getOneProduct() {
 		if(!this.getProducts().isEmpty()) {
 			return this.getProducts().pop();
