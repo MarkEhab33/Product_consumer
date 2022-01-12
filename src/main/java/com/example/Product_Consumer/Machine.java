@@ -90,6 +90,9 @@ public class Machine implements Runnable,Observable {
 						}
 					}
 				}
+			if(Driver.EndQueue.getProducts().size()==Driver.NumberOfProducts){
+				this.frontService.sendToFront("disconnect");
+			}
 		
 			
 			System.out.println("Machine "+this.getId()+" end ");
