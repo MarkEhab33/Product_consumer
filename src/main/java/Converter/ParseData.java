@@ -62,6 +62,7 @@ public class ParseData {
 		try {
 			jsonObject = new JSONObject( data );
 			object = jsonObject.getJSONObject(attribute);
+		
 			Map<String, Object> map = this.toMap(object);
 			for(String k: map.keySet()) {
 				

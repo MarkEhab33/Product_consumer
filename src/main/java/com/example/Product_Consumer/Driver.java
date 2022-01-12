@@ -71,6 +71,7 @@ public class Driver {
 	}
 
 	public void CreateQueues() {
+		this.AllQueues= new ArrayList<queue>();
 		for(int i=0;i<this.queuesIDs.size();i++) {
 			queue q = new queue();
 			q.setId(this.queuesIDs.get(i));
@@ -80,7 +81,9 @@ public class Driver {
 	}
 	
 	public void CreateMachines() {
+		this.AllMachines= new ArrayList<Machine>();
 		for(int i=0;i<this.machinesIDs.size();i++) {
+			
 			Machine m = new Machine(this.frontService);
 			m.setId(this.machinesIDs.get(i));
 			this.AllMachines.add(m);
@@ -89,6 +92,7 @@ public class Driver {
 	}
 	
 	public void CreateProducts(int number) {
+	
 		this.NumberOfProducts=number;
 		this.EndQueue=this.findThequeueByID("Qx");
 		for(int i=0 ; i<number ;i++) {
@@ -98,6 +102,7 @@ public class Driver {
 	}
 	
 	public void StartSimulation() {
+		
 		this.startTime=System.currentTimeMillis();
 		for(int i=0;i<this.AllMachines.size();i++) {
 			this.AllMachines.get(i).launch();
@@ -107,6 +112,7 @@ public class Driver {
 	
 	public void Connections() {
 		String from,to="";
+		
 		queue que = new queue();
 		Machine mach = new Machine(this.frontService);
 		
