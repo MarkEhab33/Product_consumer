@@ -73,10 +73,10 @@ public class ProductConsumerApplication {
 	}
 	
 	@PostMapping("/replay")
-	public String Replay() {
+	public void Replay() {
 		System.out.println(".... REPLAY");
 		d.replay();
-		return "Done with replay";
+	
 	}
 	@PostMapping("/end")
 	public void endSimulation(){
