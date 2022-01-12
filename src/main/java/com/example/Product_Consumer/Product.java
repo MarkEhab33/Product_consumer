@@ -6,14 +6,10 @@ public class Product {
 	
 	private String [] colors = {"green","red","blue","yellow","purple","brown","coral","fuchsia"};
 	private String colour;
-	static int index = 0 ;
 	public Product() {
 
-		if(index==colors.length-1){
-			index=0;
-		}
-		this.colour=colors[index];
-		index++;
+		this.colour=colors[Driver.colorIndex%8];
+		Driver.colorIndex++;
 		System.out.println("A new product created with colour "+this.colour);
 	}
 
