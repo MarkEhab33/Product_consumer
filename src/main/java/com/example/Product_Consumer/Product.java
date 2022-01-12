@@ -6,11 +6,14 @@ public class Product {
 	
 	private String [] colors = {"green","red","blue","yellow","purple","brown","coral","fuchsia"};
 	private String colour;
-	
+	static int index = 0 ;
 	public Product() {
-		Random r = new Random();
-		int index = r.nextInt(colors.length);
+
+		if(index==colors.length-1){
+			index=0;
+		}
 		this.colour=colors[index];
+		index++;
 		System.out.println("A new product created with colour "+this.colour);
 	}
 
