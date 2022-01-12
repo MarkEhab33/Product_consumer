@@ -74,6 +74,4 @@ public class ParseData {
 		return ReturnedMap; 
 	}
 	
-	
-
 }

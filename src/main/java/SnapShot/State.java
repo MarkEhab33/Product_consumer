@@ -2,8 +2,15 @@ package SnapShot;
 
 public class State {
 	
-	Update update;
-	long time;
+	private Update update;
+	private long time;
+	
+	public State(Update update,long start) {
+		this.update=update;
+		time = System.currentTimeMillis()-start;
+	}
+	
+	public State() {}
 	
 	public Update getUpdate() {
 		return update;
@@ -13,18 +20,6 @@ public class State {
 		this.update = update;
 	}
 	
-	
-	public State(Update update,long start) {
-		this.update=update;
-		time = System.currentTimeMillis()-start;
-	}
-	
-	public State() {}
-
-	@Override
-	public String toString() {
-		return "State [update=" + update.toString() + ", time=" + time + "]";
-	}
 
 	public long getTime() {
 		return time;
@@ -33,7 +28,6 @@ public class State {
 	public void setTime(long time) {
 		this.time = time;
 	}
-	
 	
 	public Object clone() {
 		State newState=new State();

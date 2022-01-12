@@ -37,8 +37,8 @@ import SnapShot.State;
 @CrossOrigin
 @RequestMapping("/productconsumer")
 public class ProductConsumerApplication {
-	Driver d;
-	ParseData p = new ParseData();
+	private Driver d;
+	private ParseData p = new ParseData();
 	FrontService frontService;
 	public static void main(String[] args) {
 		SpringApplication.run(ProductConsumerApplication.class, args);
@@ -49,7 +49,6 @@ public class ProductConsumerApplication {
 		this.frontService=service;
 		this.d=new Driver(this.frontService);
 	}
-
 
 	@PostMapping("/data")				// request for get the data 
 	public String getData(@RequestBody String data) throws InterruptedException {

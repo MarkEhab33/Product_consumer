@@ -20,7 +20,7 @@ public class Machine implements Runnable,Observable {
 	private int[] times= {1000,2000,3000,4000,5000,6000,7000,8000,9000};
 	private int perioud ;
 	private String id;
-	private boolean avaliable;
+	
 	private ArrayList<queue> fromQueue;
 	private queue toQueue;
 	public Product currentProduct;
@@ -33,95 +33,77 @@ public class Machine implements Runnable,Observable {
 		Random r = new Random();
 		int ind =r.nextInt(times.length);
 		this.perioud= times[ind];
-		this.avaliable = true;
 		this.fromQueue=new ArrayList<queue>();
 		this.toQueue = new queue();
 		this.frontService=service;
 	}
 	
 	public void launch() {
-		
 		Thread t = new Thread(this);
 		t.start();
 	}
 
-
 	@Override
 	public void run() {
-		
 		
 		Update update = new Update();
 		State state = new State();
 		
 		try {
-			while(Driver.EndQueue.getProducts().size()<Driver.NumberOfProducts) {
-				this.notifyAllSubscribers();
-				if(this.serve!=null) {
-					this.currentProduct=this.serve.getOneProduct();
-					
-					if(this.currentProduct!=null) {
-						System.out.println("Current Serve product is "+this.currentProduct.getColour()+" in machine "+this.id);
-						update.setMachineColour(this.currentProduct.getColour());
-						update.setMachineID(this.getId());
-						update.setQueueID(this.serve.getId());
-						update.setQueueNum(Integer.toString(this.serve.getProducts().size()));
-						ObjectMapper mapper = new ObjectMapper();
-						state=new State(update,Driver.startTime);
-						String jsonString = mapper.writeValueAsString(update);
-						
-						this.frontService.sendToFront(jsonString);
-						System.out.println(jsonString);
-						Driver.c.AddToMySteps(state);
+			while(Driver.EndQueue.getProducts().size()<Driver.NumberOfProducts){
+					this.notifyAllSubscribers();
 				
-						Thread.sleep(perioud);
-						this.toQueue.addToMyProducts(currentProduct);
+					if(this.serve!=null){
 						
-						//System.out.println("After add item to toQueue the size becomes"+ this.toQueue.getProducts().size());
-						update.setMachineColour("white");
-						update.setMachineID(this.getId());
-						update.setQueueID(this.toQueue.getId());
-						update.setQueueNum(Integer.toString(this.toQueue.getProducts().size()));
-
-						jsonString = mapper.writeValueAsString(update);
-						this.frontService.sendToFront(jsonString);
-						System.out.println(jsonString);
-						state=new State(update,Driver.startTime);
+						this.currentProduct=this.serve.getOneProduct();
 						
-						Driver.c.AddToMySteps(state);
+							if(this.currentProduct!=null) {
+							
+								update.setMachineColour(this.currentProduct.getColour());
+								update.setMachineID(this.getId());
+								update.setQueueID(this.serve.getId());
+								update.setQueueNum(Integer.toString(this.serve.getProducts().size()));
+								ObjectMapper mapper = new ObjectMapper();
+								
+								String jsonString = mapper.writeValueAsString(update);
+								this.frontService.sendToFront(jsonString);
+								System.out.println(jsonString);
+								
+								state=new State(update,Driver.startTime);
+								Driver.c.AddToMySteps(state);
+						
+								Thread.sleep(perioud);
+								
+								this.toQueue.addToMyProducts(currentProduct);
+								System.out.println(this.toQueue.getProducts().size());
+								update.setMachineColour("white");
+								update.setMachineID(this.getId());
+								update.setQueueID(this.toQueue.getId());
+								update.setQueueNum(Integer.toString(this.toQueue.getProducts().size()));
+		
+								jsonString = mapper.writeValueAsString(update);
+								this.frontService.sendToFront(jsonString);
+								System.out.println(jsonString);
+								
+								state=new State(update,Driver.startTime);
+								Driver.c.AddToMySteps(state);
+						}
 					}
-					}
+				}
+		
+			
+			System.out.println("Machine "+this.getId()+" end ");
 						
-					}
-						
-				
-				//}
-				// this.serve = ay queue msh fady 
-				
 			}catch(Exception e) {
 			System.out.println("From catch failed in machine >>>>> "+this.getId());
 			e.printStackTrace();
 		}
 	}
 		
-
-	
-	
-	
 	synchronized public void addToFromQueue(queue q) {
-		//System.out.println("An queue added to FromQueue "+q.getId()+" to the machine "+ this.id);
 		this.fromQueue.add(q);
-	   
 	}
 	
-	public Product getCurrentProduct() {
-		return currentProduct;
-	}
-
-	public void setCurrentProduct(Product currentProduct) {
-		this.currentProduct = currentProduct;
-	}
-
-
 	public String getId() {
 		return id;
 	}
@@ -130,33 +112,30 @@ public class Machine implements Runnable,Observable {
 		this.id = id;
 	}
 
-	public ArrayList<queue> getFromQueue() {
-		return fromQueue;
-	}
-
-	public void setFromQueue(ArrayList<queue> fromQueue) {
-		this.fromQueue = fromQueue;
-	}
 
 	public queue getToQueue() {
 		return toQueue;
 	}
 
 	public void setToQueue(queue toQueue) {
-		//System.out.println("the toQueue for the machine of id "+this.id+" is queue with id "+toQueue.getId());
 		this.toQueue = toQueue;
 	}
 
-
 	@Override
-	public void notifyAllSubscribers() {
-		for(int i=0 ;(i<this.fromQueue.size() && this.serve==null);i++){
-				this.serve =  (this.fromQueue).get(i).update(this);
+	 public void notifyAllSubscribers() {
+//		for(int i=0 ;(i<this.fromQueue.size()&& this.serve==null );i++){
+//				this.serve = (this.fromQueue).get(i).update(this);
+//				
+//				//System.out.println(this.serve.getProducts().size());
+//				//return;
+//		}
+		
+		int i=0;
+		while(i<this.fromQueue.size() && this.serve==null) {
+			this.serve = (this.fromQueue).get(i).update(this);
+			
+			i++;
 		}
-	}
-	
-	public boolean getAvaliability() {
-		return this.avaliable;	
 	}
 	
 }

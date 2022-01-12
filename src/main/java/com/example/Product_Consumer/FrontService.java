@@ -13,7 +13,6 @@ public class FrontService {
         this.service=new WSService(simpMessagingTemplate);
     }
 
-
     public void sendToFront(String json) throws InterruptedException {
         this.service.notifyFrontend(json);
     }

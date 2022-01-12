@@ -5,8 +5,6 @@ public class Update {
 	private String machineID;
 	private String queueNum;
 	private String machineColour;
-	
-	
 
 
 	public String getQueueID() {
@@ -41,11 +39,6 @@ public class Update {
 		this.machineColour = machineColour;
 	}
 
-	@Override
-	public String toString() {
-		return "Update [queueID=" + queueID + ", MachineID=" + machineID + ", queueNum=" + queueNum + ", MachineColour="
-				+ machineColour + "]";
-	}
 	
 	public Object clone() {
 		Update update = new Update();

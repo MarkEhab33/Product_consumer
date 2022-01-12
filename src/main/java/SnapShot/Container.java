@@ -8,15 +8,11 @@ import java.util.Queue;
 
 public class Container {
 	
-	private Deque <State> steps ;
-	
-	public Container() {
-		steps=new ArrayDeque<State>();
-	}
+	private Deque <State> steps =new ArrayDeque<State>();;
 	
 	public void AddToMySteps(State s) {
-		System.out.println("the state added is ");
-		System.out.println(s.toString());
+//		System.out.println("the state added is ");
+	//	System.out.println(s.toString());
 		steps.add((State) s.clone());
 	}
 
