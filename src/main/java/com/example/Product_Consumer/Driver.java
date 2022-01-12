@@ -27,7 +27,8 @@ public class Driver {
 	public static int NumberOfProducts=0;
 	public static queue EndQueue;
 	private FrontService frontService;
-
+	public static int colorIndex=0;
+	
 	@Autowired
 	public Driver(FrontService service){
 		this.frontService=service;

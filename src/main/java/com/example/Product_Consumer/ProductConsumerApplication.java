@@ -76,7 +76,6 @@ public class ProductConsumerApplication {
 	public void Replay() {
 		System.out.println(".... REPLAY");
 		d.replay();
-
 	}
 	@PostMapping("/end")
 	public void endSimulation(){

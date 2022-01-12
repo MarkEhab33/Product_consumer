@@ -17,7 +17,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
 
 public class Machine implements Runnable,Observable {
-	private int[] times= {1000,2000,3000,4000,5000,6000,7000,8000,9000};
+	private int[] times= {2000,3000,4000,5000};
 	private int perioud ;
 	private String id;
 	public static boolean exit;
