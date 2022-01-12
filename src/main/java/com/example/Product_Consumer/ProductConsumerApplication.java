@@ -67,6 +67,8 @@ public class ProductConsumerApplication {
 	public void startSimulation(@RequestBody String numberOfProducts) throws InterruptedException{
 		int products = Integer.parseInt(numberOfProducts);
 		Machine.exit = false;
+		Driver.colorIndex=0;
+		Driver.endedMachines=0;
 		d.CreateProducts(products);
 		Thread.sleep(3000);
 		d.StartSimulation();
