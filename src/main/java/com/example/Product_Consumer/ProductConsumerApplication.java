@@ -81,6 +81,7 @@ public class ProductConsumerApplication {
 	@PostMapping("/end")
 	public void endSimulation(){
 		Machine.exit = true;
+		System.out.println(Machine.exit);
 	}
 		
 }

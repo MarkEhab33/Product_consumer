@@ -50,7 +50,7 @@ public class Machine implements Runnable,Observable {
 			State state = new State();
 
 			try {
-				while (Driver.EndQueue.getProducts().size() <= Driver.NumberOfProducts) {
+				while (Driver.EndQueue.getProducts().size() < Driver.NumberOfProducts) {
 					this.notifyAllSubscribers();
 
 					if (this.serve != null) {
@@ -98,8 +98,11 @@ public class Machine implements Runnable,Observable {
 				System.out.println("From catch failed in machine >>>>> " + this.getId());
 				e.printStackTrace();
 			}
+			if (Driver.EndQueue.getProducts().size() == Driver.NumberOfProducts){
+				exit = true;
+			}
 		}
-			if (Driver.EndQueue.getProducts().size() == Driver.NumberOfProducts) {
+			if (Driver.EndQueue.getProducts().size() >= Driver.NumberOfProducts) {
 				try {
 					this.frontService.sendToFront("disconnect");
 				} catch (InterruptedException e) {
