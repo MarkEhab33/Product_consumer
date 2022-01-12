@@ -23,21 +23,18 @@ public class queue implements Observer {
 		toMachine=new ArrayList<Machine>();
 	}
 	
-	
-
 	synchronized public void addToMyProducts(Product p) {
-		//System.out.println("Element will added to the products  of queue with id "+this.id+" "+ p.getColour());
+		
 		this.products.push(p);;
 	}
 	
 	synchronized public void addTotoMachine(Machine m) {
-		//System.out.println("the machine is added to TOMachine "+m.getId()+"to the queue "+this.id);
+		
 		this.toMachine.add(m);
 	}
 	
-
 	synchronized public void addToFromMachine(Machine m) {
-		//System.out.println("the machine is added to FromMachine "+m.getId()+"to the queue "+this.id);
+		
 		this.fromMachine.add(m);
 		
 	}
@@ -66,37 +63,14 @@ public class queue implements Observer {
 		this.fromMachine = fromMachine;
 	}
 
-	public ArrayList<Machine> getToMachine() {
-		return toMachine;
-	}
-
-	public void setToMachine(ArrayList<Machine> toMachine) {
-		this.toMachine = toMachine;
-	}
-
-
-
-//	@Override
-//	public queue update(Machine m) {
-//		// TODO Auto-generated method stub
-//		//boolean canServe=m.getAvaliability();
-//		if((!this.products.isEmpty())){
-//			//m.currentProduct=this.cloneProduct(this.products.pop());
-//			return this;
-//		}
-//		return null;	
-//	}
-
 	public Product cloneProduct(Product p) {
 		Product newProduct = new Product();
 		newProduct.setColour(p.getColour());
 		return newProduct;
 	}
-
-
-
+	
 @Override
- synchronized public queue update(Machine m) {
+ 	synchronized public queue update(Machine m) {
 	if(!this.products.isEmpty()){
 		return this;
 	}
@@ -108,9 +82,11 @@ public class queue implements Observer {
 		return this.products.isEmpty();
 	}
 	synchronized public Product getOneProduct() {
-		if(!this.getProducts().isEmpty()) {
+	//kant get products 
+		if(!this.products.isEmpty()) {
 			return this.getProducts().pop();
 		}
 		return null;
+		
 	}
 }

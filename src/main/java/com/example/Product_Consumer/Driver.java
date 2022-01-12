@@ -30,15 +30,9 @@ public class Driver {
 	public Driver(FrontService service){
 		this.frontService=service;
 	}
-	
-	public long getStartTime() {
-		return startTime;
-	}
-	public void setStartTime(long startTime) {
-		this.startTime = startTime;
-	}
-	
+
 	public void replay() {
+
 		long startTimeOfReplay = System.currentTimeMillis();
 		long atTime;
 		long go;
@@ -59,6 +53,7 @@ public class Driver {
 			}
 		}
 	}
+
 	public void CreateQueues() {
 		for(int i=0;i<this.queuesIDs.size();i++) {
 			queue q = new queue();
@@ -87,7 +82,7 @@ public class Driver {
 	}
 	
 	public void StartSimulation() {
-		this.setStartTime(System.currentTimeMillis());
+		this.startTime=System.currentTimeMillis();
 		for(int i=0;i<this.AllMachines.size();i++) {
 			this.AllMachines.get(i).launch();
 		}
@@ -142,30 +137,18 @@ public class Driver {
 		
 	}
 	
-	public List<String> getQueuesIDs() {
-		return queuesIDs;
-	}
-
+	
 	public void setQueuesIDs(List<String> queuesIDs) {
 		this.queuesIDs = queuesIDs;
-	}
-
-	public List<String> getMachinesIDs() {
-		return machinesIDs;
 	}
 
 	public void setMachinesIDs(List<String> machinesIDs) {
 		this.machinesIDs = machinesIDs;
 	}
 
-	public HashMap<String, List<String>> getConnectionMap() {
-		return connectionMap;
-	}
 
 	public void setConnectionMap(HashMap<String, List<String>> connectionMap) {
 		this.connectionMap = connectionMap;
 	}
 	
-	
-
 }

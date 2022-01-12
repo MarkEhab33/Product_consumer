@@ -8,10 +8,13 @@ import org.springframework.stereotype.Service;
 public class WSService {
 
     private SimpMessagingTemplate messagingTemplate;
+    
     @Autowired
     public WSService(SimpMessagingTemplate messagingTemplate){
+
         this.messagingTemplate = messagingTemplate;
     }
+    
     public void notifyFrontend(final String message){
         String response=message;
         messagingTemplate.convertAndSend("/topic/greetings",response);
