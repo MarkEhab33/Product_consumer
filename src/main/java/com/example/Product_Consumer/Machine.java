@@ -90,10 +90,6 @@ public class Machine implements Runnable,Observable {
 						}
 					}
 				}
-				if (Driver.EndQueue.getProducts().size() == Driver.NumberOfProducts) {
-					this.frontService.sendToFront("disconnect");
-					System.out.println("disc");
-				}
 
 
 				System.out.println("Machine " + this.getId() + " end ");
@@ -102,10 +98,18 @@ public class Machine implements Runnable,Observable {
 				System.out.println("From catch failed in machine >>>>> " + this.getId());
 				e.printStackTrace();
 			}
-
+		}
+			if (Driver.EndQueue.getProducts().size() == Driver.NumberOfProducts) {
+				try {
+					this.frontService.sendToFront("disconnect");
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				System.out.println("disc");
+			}
 
 			System.out.println("Thread of Machine " + this.getId() + " ENDED");
-		}
+
 	}
 		
 	synchronized public void addToFromQueue(queue q) {

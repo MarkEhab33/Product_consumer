@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -48,8 +49,14 @@ public class Driver {
 					atTime=0;
 
 					try {
-						this.frontService.sendToFront(c.getSteps().pop().toString());
+						ObjectMapper mapper = new ObjectMapper();
+
+						String jsonString = mapper.writeValueAsString(c.getSteps().pop().getUpdate());
+						this.frontService.sendToFront(jsonString);
+
 					} catch (InterruptedException e) {
+						e.printStackTrace();
+					} catch (JsonProcessingException e) {
 						e.printStackTrace();
 					}
 					System.out.println(c.getSteps().pop().toString());
