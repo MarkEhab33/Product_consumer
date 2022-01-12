@@ -25,6 +25,7 @@ public class Machine implements Runnable,Observable {
 	private queue toQueue;
 	public Product currentProduct;
 	private queue serve;
+	Thread t = new Thread(this);
 	SimpMessagingTemplate simpMessagingTemplate;
 	FrontService frontService;
 
@@ -39,10 +40,16 @@ public class Machine implements Runnable,Observable {
 	}
 
 	public void launch() {
-		Thread t = new Thread(this);
+		
 		t.start();
 	}
 
+	public void stop() throws InterruptedException {
+		
+		t.join();
+	}
+	
+	
 	@Override
 	public void run() {
 		while (!exit) {
@@ -50,7 +57,7 @@ public class Machine implements Runnable,Observable {
 			State state = new State();
 
 			try {
-				while ((Driver.EndQueue.getProducts().size() < Driver.NumberOfProducts)) {
+				while ((Driver.EndQueue.getProducts().size() < Driver.NumberOfProducts) && (!exit)) {
 					this.notifyAllSubscribers();
 					if (this.serve != null) {
 						this.currentProduct = this.serve.getOneProduct();

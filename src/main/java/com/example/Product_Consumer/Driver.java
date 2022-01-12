@@ -133,12 +133,19 @@ public class Driver {
 	}
 	
 	public void StartSimulation() {
-		
 		this.startTime=System.currentTimeMillis();
 		for(int i=0;i<this.AllMachines.size();i++) {
 			this.AllMachines.get(i).launch();
 		}
+	}
+	
+	public void StopSimulation() throws InterruptedException {
 		
+		//for(int i=0;i<this.AllMachines.size();i++) {
+			//this.AllMachines.get(i);
+			//this.AllMachines.get(i).stop();
+			Machine.exit=true;
+			System.out.println("stooop");
 		
 	}
 	

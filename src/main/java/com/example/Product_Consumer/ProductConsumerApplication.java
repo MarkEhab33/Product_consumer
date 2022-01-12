@@ -80,9 +80,13 @@ public class ProductConsumerApplication {
 		d.replay();
 	}
 	@PostMapping("/end")
-	public void endSimulation(){
-		Machine.exit = true;
-		System.out.println(Machine.exit);
+	public void endSimulation() throws InterruptedException{
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>end >>>>>>>>>>.");
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>end >>>>>>>>>>.");
+		
+		//Machine.exit = true;
+		d.StopSimulation();
+		///System.out.println(Machine.exit);
 	}
 		
 }
