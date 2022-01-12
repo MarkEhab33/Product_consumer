@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,14 +38,20 @@ public class Driver {
 		long atTime;
 		long go;
 		boolean end = true;
-		
-		while(end) {	
-			if(!c.getSteps().isEmpty()) {			
+
+		while(end) {
+			if(!c.getSteps().isEmpty()) {
 				atTime = (System.currentTimeMillis())-startTimeOfReplay;
 				go = c.getSteps().peek().getTime();
-				
+
 				if(atTime>go) {
 					atTime=0;
+
+					try {
+						this.frontService.sendToFront(c.getSteps().pop().toString());
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
 					System.out.println(c.getSteps().pop().toString());
 				}
 			}else {
