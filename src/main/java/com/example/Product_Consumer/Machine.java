@@ -20,7 +20,7 @@ public class Machine implements Runnable,Observable {
 	private int[] times= {1000,2000,3000,4000,5000,6000,7000,8000,9000};
 	private int perioud ;
 	private String id;
-	
+	public static boolean exit;
 	private ArrayList<queue> fromQueue;
 	private queue toQueue;
 	public Product currentProduct;
@@ -37,7 +37,7 @@ public class Machine implements Runnable,Observable {
 		this.toQueue = new queue();
 		this.frontService=service;
 	}
-	
+
 	public void launch() {
 		Thread t = new Thread(this);
 		t.start();
@@ -45,65 +45,66 @@ public class Machine implements Runnable,Observable {
 
 	@Override
 	public void run() {
-		
-		Update update = new Update();
-		State state = new State();
-		
-		try {
-			while(Driver.EndQueue.getProducts().size()<Driver.NumberOfProducts){
+		while (!exit) {
+			Update update = new Update();
+			State state = new State();
+
+			try {
+				while (Driver.EndQueue.getProducts().size() < Driver.NumberOfProducts) {
 					this.notifyAllSubscribers();
-				
-					if(this.serve!=null){
-						
-						this.currentProduct=this.serve.getOneProduct();
-						
-							if(this.currentProduct!=null) {
-							
-								update.setMachineColour(this.currentProduct.getColour());
-								update.setMachineID(this.getId());
-								update.setQueueID(this.serve.getId());
-								update.setQueueNum(Integer.toString(this.serve.getProducts().size()));
-								ObjectMapper mapper = new ObjectMapper();
-								
-								String jsonString = mapper.writeValueAsString(update);
-								this.frontService.sendToFront(jsonString);
-								System.out.println(jsonString);
-								
-								state=new State(update,Driver.startTime);
-								Driver.c.AddToMySteps(state);
-						
-								Thread.sleep(perioud);
-								
-								this.toQueue.addToMyProducts(currentProduct);
-								System.out.println(this.toQueue.getProducts().size());
-								update.setMachineColour("white");
-								update.setMachineID(this.getId());
-								update.setQueueID(this.toQueue.getId());
-								update.setQueueNum(Integer.toString(this.toQueue.getProducts().size()));
-		
-								jsonString = mapper.writeValueAsString(update);
-								this.frontService.sendToFront(jsonString);
-								System.out.println(jsonString);
-								
-								state=new State(update,Driver.startTime);
-								Driver.c.AddToMySteps(state);
+
+					if (this.serve != null) {
+
+						this.currentProduct = this.serve.getOneProduct();
+
+						if (this.currentProduct != null) {
+
+							update.setMachineColour(this.currentProduct.getColour());
+							update.setMachineID(this.getId());
+							update.setQueueID(this.serve.getId());
+							update.setQueueNum(Integer.toString(this.serve.getProducts().size()));
+							ObjectMapper mapper = new ObjectMapper();
+
+							String jsonString = mapper.writeValueAsString(update);
+							this.frontService.sendToFront(jsonString);
+							System.out.println(jsonString);
+
+							state = new State(update, Driver.startTime);
+							Driver.c.AddToMySteps(state);
+
+							Thread.sleep(perioud);
+
+							this.toQueue.addToMyProducts(currentProduct);
+							System.out.println(this.toQueue.getProducts().size());
+							update.setMachineColour("white");
+							update.setMachineID(this.getId());
+							update.setQueueID(this.toQueue.getId());
+							update.setQueueNum(Integer.toString(this.toQueue.getProducts().size()));
+
+							jsonString = mapper.writeValueAsString(update);
+							this.frontService.sendToFront(jsonString);
+							System.out.println(jsonString);
+
+							state = new State(update, Driver.startTime);
+							Driver.c.AddToMySteps(state);
 						}
 					}
 				}
-			if(Driver.EndQueue.getProducts().size()==Driver.NumberOfProducts){
-				this.frontService.sendToFront("disconnect");
+				if (Driver.EndQueue.getProducts().size() == Driver.NumberOfProducts) {
+					this.frontService.sendToFront("disconnect");
+				}
+
+
+				System.out.println("Machine " + this.getId() + " end ");
+
+			} catch (Exception e) {
+				System.out.println("From catch failed in machine >>>>> " + this.getId());
+				e.printStackTrace();
 			}
-		
-			
-			System.out.println("Machine "+this.getId()+" end ");
-						
-			}catch(Exception e) {
-			System.out.println("From catch failed in machine >>>>> "+this.getId());
-			e.printStackTrace();
+
+
+			System.out.println("Thread of Machine " + this.getId() + " ENDED");
 		}
-		
-		
-		System.out.println("Thread of Machine "+ this.getId() + " ENDED");
 	}
 		
 	synchronized public void addToFromQueue(queue q) {

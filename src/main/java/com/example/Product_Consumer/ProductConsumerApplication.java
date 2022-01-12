@@ -66,6 +66,7 @@ public class ProductConsumerApplication {
 	@PostMapping("/start")
 	public void startSimulation(@RequestBody String numberOfProducts) throws InterruptedException{
 		int products = Integer.parseInt(numberOfProducts);
+		Machine.exit = false;
 		d.CreateProducts(products);
 		Thread.sleep(3000);
 		d.StartSimulation();
@@ -76,6 +77,10 @@ public class ProductConsumerApplication {
 		System.out.println(".... REPLAY");
 		d.replay();
 		return "Done with replay";
+	}
+	@PostMapping("/end")
+	public void endSimulation(){
+		Machine.exit = true;
 	}
 		
 }
