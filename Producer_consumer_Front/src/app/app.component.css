@@ -1,0 +1,43 @@
+.toolbar{
+    display: flex;
+}
+.toolbar button{
+    padding: 30px;
+    flex:1;
+    
+}
+.toolbar input{
+    flex: 2;
+    padding: 30px;
+    margin: 5px;
+    border-radius:5px;
+    border: none;     
+}
+
+
+
+.screen{
+    background-color: rgb(136, 136, 136);
+    border: 1px solid  black;
+    display: flex;
+    justify-content: space-around;
+    margin: 3px;
+}
+
+.btn{
+    background-color: floralwhite;
+    margin: 5px;
+    border-radius:30px;
+    border: none;   
+
+   
+}
+
+.screen div{
+    flex:1;
+    display: flex;
+    justify-content: space-around;
+    border: none;
+    
+  
+}

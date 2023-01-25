@@ -1,0 +1,20 @@
+
+<body style="background-color:rgb(54, 54, 54);">
+
+  <div class="toolbar">
+      <button class="btn" (click)="onQclick()" [ngStyle]="{'background-color':modes===1? 'lightgrey' : 'floralwhite'}">ADD QUEUE</button>
+      <button class="btn" (click)="onMclick()" [ngStyle]="{'background-color':modes===2? 'lightgrey' : 'floralwhite'}">ADD MACHINE</button>
+      <button class="btn" (click)="onLclick()" [ngStyle]="{'background-color':modes===3? 'lightgrey' : 'floralwhite'}">ADD LINE</button>
+      <button class="btn" (click)="onDelete()" [ngStyle]="{'background-color':modes===4? 'lightgrey' : 'floralwhite'}">DELETE</button>
+      <button class="btn" (click)="onSim()"    [ngStyle]="{'background-color':modes===5? 'lightgrey' : 'floralwhite'}">START</button>
+      <button class="btn" (click)="onReplay()" [ngStyle]="{'background-color':modes===6? 'lightgrey' : 'floralwhite'}">REPLAY</button>
+      <button class="btn" (click)="onClear()">CLEAR ALL</button>
+      <button class="btn" (click)="onStop()"> END </button>
+      <input type="number" name="Rate" id="rateInput" placeholder="Rate:" min="1">
+      
+  </div>
+
+  <div class="screen">
+    <div id="container" (click)="clickScreen()"></div>
+  </div>
+</body>
