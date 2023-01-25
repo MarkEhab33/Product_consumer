@@ -94,6 +94,7 @@ public class Driver {
 			}
 		}
 		try {
+			Thread.sleep(1000);
 			this.frontService.sendToFront("disconnect");
 		} catch (InterruptedException e) {
 			e.printStackTrace();
